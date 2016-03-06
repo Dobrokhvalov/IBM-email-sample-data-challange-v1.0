@@ -1,0 +1,61 @@
+# file: CreateSignedEml.rb
+
+require 'rubygems'
+require 'chilkat'
+
+# How to create a digitally signed email (.eml file) in Ruby
+mailman = Chilkat::CkMailMan.new()
+mailman.UnlockComponent("anything for 30-day trial")
+
+# Create a simple email
+email = Chilkat::CkEmail.new()
+email.put_Subject("Digitally signed email created by a Ruby script")
+email.put_Body("Digitally signed email created by a Ruby script")
+# The signature uses the digital certificate of the sender (i.e. the email
+# address in the FROM header field).
+email.put_From("John <john@example.com>")
+
+# Add a few recipients
+email.AddTo("Matt","matt@chilkatsoft.com")
+email.AddTo("Support","support@chilkatsoft.com")
+
+# There are a number of ways to create digitally signed email using Chilkat.
+# This example demonstrates the easiest (other examples will explore
+# some of the other possibilities).
+# To send a signed email, the digital certificate matching the sender's email
+# address (in the FROM header field) should have been previously be installed on your computer
+# with the private key.
+# If not, you may install from a .pfx (or .p12) file.
+# Double-click on the .pfx to install.  Do not check the "Enable strong private key
+# protection" checkbox because if you do, programs that access the private key
+# will cause the operating system to display a pop-up warning dialog to
+# notify the logged-in user of the private key access.  Otherwise, select all the
+# defaults and import the certificate.
+#
+# IMPORTANT: The .pfx should be imported from the same logged-in account
+# under which the program will be running.  This is because private keys
+# are stored by Windows within the logged-on user's "protected store".
+#
+# Once the PFX is installed, the Chilkat component should be able to locate
+# the certificate for signing.  You only need to set the SendSigned property = true:
+email.put_SendSigned(true)
+
+# We can choose to create a signed email using a detached signature,
+# or, if the OpaqueSigning property is set the email will use an opaque signature
+# where the content of the email is not visible until the security layers are unwrapped.
+mailman.put_OpaqueSigning(true)
+
+mimeStr = Chilkat::CkString.new()
+# The RenderToMime method renders the email according to the property settings
+# of the email and mailman objects.
+success = mailman.RenderToMime(email,mimeStr)
+if not success
+  mailman.SaveLastError("lastError.xml")
+  else
+  # Convert line endings from CRLF to bare LF's
+  mimeStr.toLF()
+  # Save the MIME string to a file.
+  aFile = File.new("signed_email.eml", "w")
+  aFile.write(mimeStr.getString())
+  aFile.close
+  end
