@@ -2,7 +2,9 @@ $LOAD_PATH << '.'
 
 require 'modules/config_parser'
 require 'modules/rss_handle'
-require 'modules/output'
+require 'modules/account'
+require 'modules/conversation'
+
 
 
 def main
@@ -29,15 +31,26 @@ def main
   #config_parser.number_of_inboxes.times.each do |i|
   #  puts "generating .eml files for user ##{i}"
   #  end
-  account  = RSSHandle::Account.new
+  account  = Account::Account.new
 
   #config_parser.rss_feeds.each do |link|
   #  rss_getter = RSSHandle::Getter.new link, account #"http://stackoverflow.com/feeds" #
   #end
 
 
-  rss_getter = RSSHandle::Getter.new "http://apps.topcoder.com/forums/?module=RSS&threadID=874783", account
+  rss_getter = RSSHandle::Getter.new "http://apps.topcoder.com/forums/?module=RSS&threadID=874783"
 
+  feeds = rss_getter.get_feeds
+
+  thread = Conversation::Thread.new account
+
+  feeds.each do |feed|
+    thread.add feed.subject, feed.sent_at, feed.text
+  end
+
+  thread.build
+
+  thread.write_emls
 
 
 
