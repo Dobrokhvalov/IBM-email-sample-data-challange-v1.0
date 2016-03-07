@@ -59,7 +59,7 @@ module Conversation
 
         @history_text =  text_to_add + @history_text
 
-        # adding '>' for text in history
+        # adding '>' for plain text in history
         @history_text.gsub!("\n", "\n>")
       end
 
@@ -93,7 +93,7 @@ module Conversation
     end
 
 
-
+    
 
     def set_email_from_for_outgoing_messages
       # all messages that not incoming are outgoing
@@ -119,20 +119,34 @@ module Conversation
 
 
     def build_email_tree
-
+      
       change_subjects
-
+      
       select_incoming_messages
 
       set_email_from_for_incoming_messages
 
       set_email_from_for_outgoing_messages
 
+      # for reply-to and references
+      generate_message_ids
 
+      #add_message_references
+      
       add_email_history
-
+      
     end
 
+    #def add_message_references
+    #  @messages.each do |m|
+    #    
+    #  end
+    #end
+    
+    def set_message_ids
+      @messages.map{|m| m.generate_message_id }
+    end
+    
     def unrelated_feeds?
       @messages.select{|m| m.subject.include? "Re:" or m.subject.include? "Answer by"}.empty? #and participants.count > 1
     end
@@ -149,16 +163,14 @@ module Conversation
 
 
 
-
-
     def initialize account
       @incoming_messages = []
-
+      
       @messages = []
-
-
+      
+      
       @account = account
-
+      
       @history_text = ""
       @history_html = ""
 

@@ -31,11 +31,13 @@ module RSSHandle
 
 
     def initialize url
+
       puts "getting feeds from: #{url}"
 
       @feeds = []
 
       @url = url
+
 
     end
 
@@ -64,9 +66,6 @@ module RSSHandle
       @item.summary || @item.description
     end
 
-    # def user
-    #   @item.dc_creator || @item.author
-    # end
 
     private
 

@@ -1,36 +1,39 @@
 require 'nokogiri'
 require 'mail'
+require 'uuid'
+
 
 module Message
   class Message
 
-    attr_reader  :created_at
+    attr_reader  :created_at, :message_id
     attr_accessor :html_part, :text_part, :subject, :account_from, :account_to
 
     @@count = 0
+
+    def generate_message_id
+      #@message_id = SecureRandom.hex(32)
+      @message_id ||= "<#{ UUID.generate }@#{@account_from.domain}>"
+    end
 
     def write_eml
 
       title = @subject
       text = @text
       send_at = @created_at
-
-
-
       attached_file_flag = false
-
       dummy_filename = nil
-
       account_to = @account_to
       account_from = @account_from
 
+      custom_message_id = generate_message_id
+
       mail = Mail.new do
         date send_at
-        to      account_to #"#{account_to.name} <#{account_to.email}>"
-        from    account_from #
+        to      account_to
+        from    account_from
         subject title
-
-
+        message_id custom_message_id
 
         # creating dummy file to attach
         if @@count == 1
@@ -45,11 +48,13 @@ module Message
 
           add_file dummy_filename
 
-
         end
 
 
       end
+
+
+
 
       message_txt = @text_part
 
@@ -72,7 +77,7 @@ module Message
 
 
 
-      File.open("./output/#{@count}.eml", 'w') { |file| file.write(mail.to_s) }
+      File.open("./#{@account_to.inbox_path}/#{@count}.eml", 'w') { |file| file.write(mail.to_s) }
 
       # erasing dummy file
       if attached_file_flag
@@ -105,9 +110,8 @@ module Message
 
     end
 
-
-
-
   end
+
+
 
 end

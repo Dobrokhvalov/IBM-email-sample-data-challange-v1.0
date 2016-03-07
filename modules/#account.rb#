@@ -28,7 +28,7 @@ module Account
     end
 
 
-
+    
     private
 
     def initialize

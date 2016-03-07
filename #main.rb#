@@ -46,7 +46,9 @@ def main
       end
 
       thread.build
-
+      
+      
+      
       thread.write_emls
     end
 

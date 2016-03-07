@@ -8,3 +8,4 @@ gem 'mail'
 
 gem 'nokogiri'
 gem 'faker'
+gem 'uuid'
