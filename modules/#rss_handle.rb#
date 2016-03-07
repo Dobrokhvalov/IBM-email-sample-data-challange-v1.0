@@ -232,7 +232,6 @@ module RSSHandle
       set_email_from_for_outgoing_messages
 
 
-
       add_email_history
 
     end

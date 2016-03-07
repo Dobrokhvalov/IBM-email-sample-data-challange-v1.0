@@ -29,12 +29,15 @@ def main
   #config_parser.number_of_inboxes.times.each do |i|
   #  puts "generating .eml files for user ##{i}"
   #  end
+  account  = RSSHandle::Account.new
+
   #config_parser.rss_feeds.each do |link|
-  #  rss_getter = RSSHandle::Getter.new link #"http://stackoverflow.com/feeds" #"http://stackoverflow.com/feeds/question/35741275"
+  #  rss_getter = RSSHandle::Getter.new link, account #"http://stackoverflow.com/feeds" #
   #end
 
-  rss_getter = RSSHandle::Getter.new  "http://apps.topcoder.com/forums/?module=RSS&threadID=874783"
-  #byebug
+
+  rss_getter = RSSHandle::Getter.new "http://apps.topcoder.com/forums/?module=RSS&threadID=874783", account
+
 
 
 
