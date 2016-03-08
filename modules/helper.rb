@@ -9,3 +9,13 @@ def directory_size(path)
   end
   total_size
 end
+
+def sanitize_filename(filename)
+
+  ans = filename.gsub(/^.*(\\|\/)/, '')
+
+  # Strip out the non-ascii character
+  ans = ans.gsub(/[^0-9A-Za-z.\-]/, '_')
+
+  return ans
+end

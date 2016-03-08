@@ -1,16 +1,7 @@
 require 'nokogiri'
 require 'mail'
 require 'uuid'
-
-def sanitize_filename(filename)
-
-  ans = filename.gsub(/^.*(\\|\/)/, '')
-
-  # Strip out the non-ascii character
-  ans = ans.gsub(/[^0-9A-Za-z.\-]/, '_')
-
-  return ans
-end
+require 'modules/helper'
 
 module Message
   class Message
@@ -70,10 +61,6 @@ module Message
           # randomly choose megs from 1 to 20
           n = (1..20).to_a.sample
 
-
-          # if account.folder_full_with?(n)
-          #   n =
-          # end
 
           dummy_filename = "./file-#{n}M.txt"
           f = File.open(dummy_filename, "w") do |f|
