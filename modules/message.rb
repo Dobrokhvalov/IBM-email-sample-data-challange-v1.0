@@ -67,12 +67,14 @@ module Message
           FileUtils::mkdir_p(dummy_path)
 
           dummy_filename = "#{dummy_path}/file-#{n}M.txt"
+
           f = File.open(dummy_filename, "w") do |f|
             contents = "x" * (1024*1024)
             n.to_i.times { f.write(contents) }
           end
 
           add_file dummy_filename
+
 
         end
 
