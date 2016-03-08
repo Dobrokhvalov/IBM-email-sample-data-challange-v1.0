@@ -6,21 +6,26 @@ module ConfigParser
 
 
      def file_destination
-       @dct["fileDestination"]
+       @dct["fileDestination"] || "./output"
      end
 
      def megs_per_inbox
+       # 500 by default
        (@dct["megsPerInbox"] || 500).to_i
      end
 
      def number_of_inboxes
-       @dct["numberOfInboxes"].to_i
+       # 500 by default
+       (@dct["numberOfInboxes"] || 50).to_i
      end
 
      def rss_feeds
        @dct["rss"]
      end
 
+     def remove_rss link
+       @dct["rss"].delete(link)
+     end
 
      def read_configs
        puts "configs: "

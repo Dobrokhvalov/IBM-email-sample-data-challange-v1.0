@@ -1,0 +1,131 @@
+Date: Tue, 08 Mar 2016 12:44:55 +0000
+From: Quinn West <jazlyn.bernier@stark.biz>
+To: virginie_hahn@dicki.net
+Message-ID: <1b6fa2a0-c761-0133-ed4e-080027d0fd9d@stark.biz>
+Subject: Generate all permutations of string in some range
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_56ded611cc642_118541a29ae9145f";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_56ded611cc642_118541a29ae9145f
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+I am looking for the best way of generating all strings permutations in a range.
+
+Here is an example. 
+
+Start : aaaa   
+End : cccc  
+
+
+Or for example   
+
+Start : aabb   
+End : ccaa
+
+
+Strings that should be generated for the first case      
+
+aaaa,aaab,aaac,aaba,aabb,aabc,aaca,aacb ... cccc 
+
+
+So I hope you got an idea. All possible permutations. 
+
+Please suggest how to solve this problem efficiently. I can write nested loops, but I hope there are some default implementations that are much more efficient.
+
+EDIT
+
+The same as counting in binary system
+
+100
+101
+110
+111
+
+
+EXAMPLE
+Start : aaa
+End : ccc
+
+aaa
+aab
+aac
+aba
+abb
+abc
+aca
+acb
+acc
+caa
+cba
+cbb
+cbc
+cca
+ccb
+ccc
+
+----==_mimepart_56ded611cc642_118541a29ae9145f
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>I am looking for the best way of generating all strings permutations in a range.</p>
+
+<p>Here is an example. </p>
+
+<pre><code>Start : aaaa   
+End : cccc  
+</code></pre>
+
+<p>Or for example   </p>
+
+<pre><code>Start : aabb   
+End : ccaa
+</code></pre>
+
+<p>Strings that should be generated for the first case      </p>
+
+<pre><code>aaaa,aaab,aaac,aaba,aabb,aabc,aaca,aacb ... cccc 
+</code></pre>
+
+<p>So I hope you got an idea. All possible permutations. </p>
+
+<p>Please suggest how to solve this problem efficiently. I can write nested loops, but I hope there are some default implementations that are much more efficient.</p>
+
+<p><strong>EDIT</strong></p>
+
+<p>The same as counting in binary system</p>
+
+<pre><code>100
+101
+110
+111
+</code></pre>
+
+<p><strong>EXAMPLE</strong>
+Start : aaa<br>
+End : ccc</p>
+
+<pre><code>aaa
+aab
+aac
+aba
+abb
+abc
+aca
+acb
+acc
+caa
+cba
+cbb
+cbc
+cca
+ccb
+ccc
+</code></pre>
+----==_mimepart_56ded611cc642_118541a29ae9145f--

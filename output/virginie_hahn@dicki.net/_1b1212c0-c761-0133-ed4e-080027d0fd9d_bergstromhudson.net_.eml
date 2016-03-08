@@ -1,0 +1,29 @@
+Date: Wed, 03 Feb 2010 21:48:42 +0000
+From: "Theodora Stehr Sr." <roslyn_ward@bergstromhudson.net>
+To: virginie_hahn@dicki.net
+Message-ID: <1b1212c0-c761-0133-ed4e-080027d0fd9d@bergstromhudson.net>
+Subject: Check domain availability Java
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_56ded6113711f_118541a29ae9014b";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_56ded6113711f_118541a29ae9014b
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Is there a relatively simple way in Java to check if a domain is available or not?
+
+I need a reliable method, so only checking if the connection can be made is not enough.
+----==_mimepart_56ded6113711f_118541a29ae9014b
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Is there a relatively simple way in Java to check if a domain is available or not?</p>
+
+<p>I need a reliable method, so only checking if the connection can be made is not enough.</p>
+----==_mimepart_56ded6113711f_118541a29ae9014b--

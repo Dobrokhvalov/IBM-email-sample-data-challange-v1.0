@@ -1,0 +1,41 @@
+Date: Tue, 08 Mar 2016 13:33:19 +0000
+From: Jackson Flatley <emily@stanton.org>
+To: virginie_hahn@dicki.net
+Message-ID: <1b7fe8f0-c761-0133-ed4e-080027d0fd9d@stanton.org>
+Subject: Json to OrderedDict in Python
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_56ded611e6996_118541a29ae93054";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_56ded611e6996_118541a29ae93054
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Whenever I try to parse a json to an OrderedDict, it ends up in a different order than the json is. I try it like this:
+
+from collections import OrderedDict    
+data = OrderedDict(json.loads(resp.read().decode("utf-8")), object_pairs_hook=OrderedDict)
+
+
+Am I doing something wrong, if so, what can I do to fix it, or is it not possible in python?
+
+I have seen things like object_pairs_hook=collections.OrderedDict but that does not even execute correctly. It can't resolve the refference. 
+----==_mimepart_56ded611e6996_118541a29ae93054
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>Whenever I try to parse a json to an OrderedDict, it ends up in a different order than the json is. I try it like this:</p>
+
+<pre><code>from collections import OrderedDict    
+data = OrderedDict(json.loads(resp.read().decode("utf-8")), object_pairs_hook=OrderedDict)
+</code></pre>
+
+<p>Am I doing something wrong, if so, what can I do to fix it, or is it not possible in python?</p>
+
+<p>I have seen things like <code>object_pairs_hook=collections.OrderedDict</code> but that does not even execute correctly. It can't resolve the refference. </p>
+----==_mimepart_56ded611e6996_118541a29ae93054--

@@ -1,0 +1,123 @@
+Date: Tue, 08 Mar 2016 13:18:43 +0000
+From: Valerie Feeney <maud.little@ricestroman.org>
+To: virginie_hahn@dicki.net
+Message-ID: <1b75a410-c761-0133-ed4e-080027d0fd9d@ricestroman.org>
+Subject: Creating excerpt using Javascript/jQuery
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_56ded611d5b56_118541a29ae92024";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_56ded611d5b56_118541a29ae92024
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+I am trying to make excerpt of all h3 text with some manner using some array methods. But the problem is to select all h3 I used as selector is
+
+var productTitle = $('#products-carousel').find('.single-trending-list').find('h3').text();
+
+
+And it grabs all h3 texts together and finally I get same text for all h3
+
+How can I select all h3 individually?
+
+Here is JSFiddle
+
+Here is my Code:
+
+
+
+var productTitle = $('#products-carousel').find('.single-trending-list').find('h3').text(),
+	productTitleExcerpt;
+	var toArray = productTitle.split("", 36),
+	joinArray = toArray.join(''),
+	joinArrayToArray = joinArray.split(" "),
+	joinArrayToArrayPop = joinArrayToArray.pop(),
+	joinArrayToArrayPopPush = joinArrayToArray.push('...'),
+	joinArrayToArrayPopPushJoin = joinArrayToArray.join(' '),
+	productTitleExcerpt = joinArrayToArrayPopPushJoin;
+
+	$('#products-carousel').find('.single-trending-list').find('h3').text(productTitleExcerpt);
+<ul class="ul-trending-list" id="products-carousel">
+  <li>
+    <div class="single-trending-list">
+      <span>$90.00</span>
+      <h3>Leather Clutch, Gray Distressed</h3>
+    </div>
+  </li>
+  <li>
+    <div class="single-trending-list">
+      <span>$91.00</span>
+      <h3>Sori Yanagi Butterfly Y Wenge Stool</h3>
+    </div>
+  </li>
+  <li>
+    <div class="single-trending-list">
+      <span>$31.00</span>
+      <h3>BOTTLIT Canister, 600ml</h3>
+    </div>
+  </li>
+</ul>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+
+
+----==_mimepart_56ded611d5b56_118541a29ae92024
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>I am trying to make excerpt of all <strong>h3</strong> text with some manner using some array methods. But the problem is to select all <strong>h3</strong> I used as selector is</p>
+
+<pre><code>var productTitle = $('#products-carousel').find('.single-trending-list').find('h3').text();
+</code></pre>
+
+<p>And it grabs all <strong>h3</strong> texts together and finally I get same text for all <strong>h3</strong></p>
+
+<p>How can I select all <strong>h3</strong> individually?</p>
+
+<p>Here is <a href="https://jsfiddle.net/Jim_Fahad/8s3Lturh/?utm_source=website&amp;utm_medium=embed&amp;utm_campaign=8s3Lturh" rel="nofollow">JSFiddle</a></p>
+
+<p>Here is my Code:</p>
+
+<p><div class="snippet" data-lang="js" data-hide="false">
+<div class="snippet-code">
+<pre class="snippet-code-js lang-js prettyprint-override"><code>var productTitle = $('#products-carousel').find('.single-trending-list').find('h3').text(),
+	productTitleExcerpt;
+	var toArray = productTitle.split("", 36),
+	joinArray = toArray.join(''),
+	joinArrayToArray = joinArray.split(" "),
+	joinArrayToArrayPop = joinArrayToArray.pop(),
+	joinArrayToArrayPopPush = joinArrayToArray.push('...'),
+	joinArrayToArrayPopPushJoin = joinArrayToArray.join(' '),
+	productTitleExcerpt = joinArrayToArrayPopPushJoin;
+
+	$('#products-carousel').find('.single-trending-list').find('h3').text(productTitleExcerpt);</code></pre>
+<pre class="snippet-code-html lang-html prettyprint-override"><code>&lt;ul class="ul-trending-list" id="products-carousel"&gt;
+  &lt;li&gt;
+    &lt;div class="single-trending-list"&gt;
+      &lt;span&gt;$90.00&lt;/span&gt;
+      &lt;h3&gt;Leather Clutch, Gray Distressed&lt;/h3&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;div class="single-trending-list"&gt;
+      &lt;span&gt;$91.00&lt;/span&gt;
+      &lt;h3&gt;Sori Yanagi Butterfly Y Wenge Stool&lt;/h3&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;div class="single-trending-list"&gt;
+      &lt;span&gt;$31.00&lt;/span&gt;
+      &lt;h3&gt;BOTTLIT Canister, 600ml&lt;/h3&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"&gt;&lt;/script&gt;</code></pre>
+</div>
+</div>
+</p>
+----==_mimepart_56ded611d5b56_118541a29ae92024--

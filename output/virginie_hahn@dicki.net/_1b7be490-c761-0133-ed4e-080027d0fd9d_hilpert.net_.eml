@@ -1,0 +1,171 @@
+Date: Tue, 08 Mar 2016 13:29:14 +0000
+From: Macey Quitzon <edmund@hilpert.net>
+To: virginie_hahn@dicki.net
+Message-ID: <1b7be490-c761-0133-ed4e-080027d0fd9d@hilpert.net>
+Subject: How can I make Bootstrap 4 cards all the same height?
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_56ded611dff8e_118541a29ae92636";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_56ded611dff8e_118541a29ae92636
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+I am using Bootstrap 4 alpha 2 and taking advantage on cards. 
+Specifically, I am working with this example taken from the official docs. As title says, how can I make all cards the same height?
+
+EDIT: All I can think by now is setting the following CSS rule:
+
+.card {
+    min-height: 200px;
+}
+
+
+But that is just an hard code solution that won't work in general case.
+The code in my view is the same as the one in the docs i.e:
+
+<div class="card-columns">
+  <div class="card">
+    <img class="card-img-top" data-src="..." alt="Card image cap">
+    <div class="card-block">
+      <h4 class="card-title">Card title that wraps to a new line</h4>
+      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+    </div>
+  </div>
+  <div class="card card-block">
+    <blockquote class="card-blockquote">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+      <footer>
+        <small class="text-muted">
+          Someone famous in <cite title="Source Title">Source Title</cite>
+        </small>
+      </footer>
+    </blockquote>
+  </div>
+  <div class="card">
+    <img class="card-img-top" data-src="..." alt="Card image cap">
+    <div class="card-block">
+      <h4 class="card-title">Card title</h4>
+      <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+  </div>
+  <div class="card card-block card-inverse card-primary text-xs-center">
+    <blockquote class="card-blockquote">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat.</p>
+      <footer>
+        <small>
+          Someone famous in <cite title="Source Title">Source Title</cite>
+        </small>
+      </footer>
+    </blockquote>
+  </div>
+  <div class="card card-block text-xs-center">
+    <h4 class="card-title">Card title</h4>
+    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+  </div>
+  <div class="card">
+    <img class="card-img" data-src="..." alt="Card image">
+  </div>
+  <div class="card card-block text-xs-right">
+    <blockquote class="card-blockquote">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+      <footer>
+        <small class="text-muted">
+          Someone famous in <cite title="Source Title">Source Title</cite>
+        </small>
+      </footer>
+    </blockquote>
+  </div>
+  <div class="card card-block">
+    <h4 class="card-title">Card title</h4>
+    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+  </div>
+</div>
+
+----==_mimepart_56ded611dff8e_118541a29ae92636
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>I am using Bootstrap 4 alpha 2 and taking advantage on cards. 
+Specifically, I am working with <a href="http://v4-alpha.getbootstrap.com/components/card/#columns" rel="nofollow">this example</a> taken from the official docs. As title says, how can I make all cards the same height?</p>
+
+<p>EDIT: All I can think by now is setting the following CSS rule:</p>
+
+<pre><code>.card {
+    min-height: 200px;
+}
+</code></pre>
+
+<p>But that is just an hard code solution that won't work in general case.
+The code in my view is the same as the one in the docs i.e:</p>
+
+<pre><code>&lt;div class="card-columns"&gt;
+  &lt;div class="card"&gt;
+    &lt;img class="card-img-top" data-src="..." alt="Card image cap"&gt;
+    &lt;div class="card-block"&gt;
+      &lt;h4 class="card-title"&gt;Card title that wraps to a new line&lt;/h4&gt;
+      &lt;p class="card-text"&gt;This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="card card-block"&gt;
+    &lt;blockquote class="card-blockquote"&gt;
+      &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.&lt;/p&gt;
+      &lt;footer&gt;
+        &lt;small class="text-muted"&gt;
+          Someone famous in &lt;cite title="Source Title"&gt;Source Title&lt;/cite&gt;
+        &lt;/small&gt;
+      &lt;/footer&gt;
+    &lt;/blockquote&gt;
+  &lt;/div&gt;
+  &lt;div class="card"&gt;
+    &lt;img class="card-img-top" data-src="..." alt="Card image cap"&gt;
+    &lt;div class="card-block"&gt;
+      &lt;h4 class="card-title"&gt;Card title&lt;/h4&gt;
+      &lt;p class="card-text"&gt;This card has supporting text below as a natural lead-in to additional content.&lt;/p&gt;
+      &lt;p class="card-text"&gt;&lt;small class="text-muted"&gt;Last updated 3 mins ago&lt;/small&gt;&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="card card-block card-inverse card-primary text-xs-center"&gt;
+    &lt;blockquote class="card-blockquote"&gt;
+      &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat.&lt;/p&gt;
+      &lt;footer&gt;
+        &lt;small&gt;
+          Someone famous in &lt;cite title="Source Title"&gt;Source Title&lt;/cite&gt;
+        &lt;/small&gt;
+      &lt;/footer&gt;
+    &lt;/blockquote&gt;
+  &lt;/div&gt;
+  &lt;div class="card card-block text-xs-center"&gt;
+    &lt;h4 class="card-title"&gt;Card title&lt;/h4&gt;
+    &lt;p class="card-text"&gt;This card has supporting text below as a natural lead-in to additional content.&lt;/p&gt;
+    &lt;p class="card-text"&gt;&lt;small class="text-muted"&gt;Last updated 3 mins ago&lt;/small&gt;&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="card"&gt;
+    &lt;img class="card-img" data-src="..." alt="Card image"&gt;
+  &lt;/div&gt;
+  &lt;div class="card card-block text-xs-right"&gt;
+    &lt;blockquote class="card-blockquote"&gt;
+      &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.&lt;/p&gt;
+      &lt;footer&gt;
+        &lt;small class="text-muted"&gt;
+          Someone famous in &lt;cite title="Source Title"&gt;Source Title&lt;/cite&gt;
+        &lt;/small&gt;
+      &lt;/footer&gt;
+    &lt;/blockquote&gt;
+  &lt;/div&gt;
+  &lt;div class="card card-block"&gt;
+    &lt;h4 class="card-title"&gt;Card title&lt;/h4&gt;
+    &lt;p class="card-text"&gt;This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.&lt;/p&gt;
+    &lt;p class="card-text"&gt;&lt;small class="text-muted"&gt;Last updated 3 mins ago&lt;/small&gt;&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+----==_mimepart_56ded611dff8e_118541a29ae92636--

@@ -6,5 +6,5 @@
 "http://stackoverflow.com/feeds/question/35741275",
 "http://stackoverflow.com/feeds"
 ],
-"fileDestination":"./outputs"
+"fileDestination":"./output"
 }

@@ -1,0 +1,37 @@
+Date: Tue, 08 Mar 2016 13:41:33 +0000
+From: Johnathon Considine <mathias@kautzer.info>
+To: virginie_hahn@dicki.net
+Message-ID: <1b8c99a0-c761-0133-ed4e-080027d0fd9d@kautzer.info>
+Subject: Vertical UIScrollView with maximum y position on subviews
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_56ded61273c0_118541a29ae94249";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_56ded61273c0_118541a29ae94249
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+I have a vertical UIScrollView with 2 buttons. I need to make it so when you scroll, the buttons hit the top of the iPhone screen and then no longer scroll with the UIScrollView until the scroll view has come back down.
+
+Here is what the page looks like:
+
+
+
+This My Polls and Following buttons, when scrolled up, need to stay below the blue bar that says "Me" on it. What would be the best way to accomplish this? Thanks! (I am using Objective-C)
+----==_mimepart_56ded61273c0_118541a29ae94249
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>I have a vertical UIScrollView with 2 buttons. I need to make it so when you scroll, the buttons hit the top of the iPhone screen and then no longer scroll with the UIScrollView until the scroll view has come back down.</p>
+
+<p>Here is what the page looks like:</p>
+
+<p><a href="http://i.stack.imgur.com/9VA2w.png" rel="nofollow"><img src="http://i.stack.imgur.com/9VA2w.png" alt="Example Image"></a></p>
+
+<p>This My Polls and Following buttons, when scrolled up, need to stay below the blue bar that says "Me" on it. What would be the best way to accomplish this? Thanks! (I am using Objective-C)</p>
+----==_mimepart_56ded61273c0_118541a29ae94249--

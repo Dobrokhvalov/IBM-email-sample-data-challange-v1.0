@@ -49,23 +49,35 @@ def main
       # repeating RSS Feeds if needed
       if sources_list.empty?
         sources_list = config.rss_feeds.shuffle.clone
+
+        # when no RSS feeds in config
+        if sources_list.empty?
+          abort("\nPut list of RSS in config.json file!")
+        end
       end
 
       link = sources_list.pop
 
-      rss_getter = RSSHandle::Getter.new link
+      begin
+        rss_getter = RSSHandle::Getter.new link
 
-      feeds = rss_getter.get_feeds
+        feeds = rss_getter.get_feeds
 
-      thread = Conversation::Thread.new account
+        thread = Conversation::Thread.new account
 
-      feeds.each do |feed|
-        thread.add feed.subject, feed.sent_at, feed.text
+        feeds.each do |feed|
+          thread.add feed.subject, feed.sent_at, feed.text
+        end
+
+        thread.build
+
+        thread.write_emls
+      rescue Exception => e
+        puts "ERROR! problem with RSS Feed: '#{link}'. Removing it from RSS list"
+        puts e.message
+        #puts e.backtrace.inspect
+        config.remove_rss link
       end
-
-      thread.build
-
-      thread.write_emls
 
     end
 

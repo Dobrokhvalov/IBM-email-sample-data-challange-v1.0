@@ -1,0 +1,55 @@
+Date: Tue, 08 Mar 2016 13:41:46 +0000
+From: Nigel Marks III <mia_bauch@wunsch.info>
+To: virginie_hahn@dicki.net
+Message-ID: <1b999820-c761-0133-ed4e-080027d0fd9d@wunsch.info>
+Subject: How to re-arrange cols in a text file?
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_56ded6121cb8c_118541a29ae950b6";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_56ded6121cb8c_118541a29ae950b6
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+I have a text file like this:
+
+ res=read.table("C:\\file.txt", header=T)
+ Work   Sam  Adam
+ Calss  0.5  0.6
+ Rank   1     2
+
+
+I want to re-arrange it to be like this:
+
+   Work   Name value
+   Class  Sam  0.5
+   Class  Adam 0.6
+   Rank   Sam  1
+   Rank   Adam 2
+
+----==_mimepart_56ded6121cb8c_118541a29ae950b6
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>I have a text file like this:</p>
+
+<pre><code> res=read.table("C:\\file.txt", header=T)
+ Work   Sam  Adam
+ Calss  0.5  0.6
+ Rank   1     2
+</code></pre>
+
+<p>I want to re-arrange it to be like this:</p>
+
+<pre><code>   Work   Name value
+   Class  Sam  0.5
+   Class  Adam 0.6
+   Rank   Sam  1
+   Rank   Adam 2
+</code></pre>
+----==_mimepart_56ded6121cb8c_118541a29ae950b6--

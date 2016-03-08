@@ -1,0 +1,471 @@
+Date: Tue, 08 Mar 2016 00:15:20 +0000
+From: Tom Harris <roel@kritehr.org>
+To: virginie_hahn@dicki.net
+Message-ID: <1b685600-c761-0133-ed4e-080027d0fd9d@kritehr.org>
+Subject: MVC with multiple controllers
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_56ded611c1ccb_118541a29ae908b3";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_56ded611c1ccb_118541a29ae908b3
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+I'm going crazy with the making of an application in Java/JavaFX.
+
+I have a project with more fxml files, each with a controller
+(exactly like this example JavaFX TabPane - One controller for each tab )
+
+This is the main fxml file (screentab.fxml), with multiple fx:include.
+
+<TabPane fx:id="tabPane" BorderPane.alignment="CENTER">
+    <tabs>
+     <Tab text="Studenti">
+           <content>
+           <fx:include fx:id="Studenti" source="tabStudenti.fxml" />
+            </content>
+           </Tab>
+      <Tab text="Percorsi &#10;formativi">
+      <content>
+      <fx:include fx:id="tabPercorsiFormativi" source="tabPercorsiFormativi.fxml" />
+      </content>
+           </Tab>
+        <Tab text="Calendario &#10;delle&#10;lezioni">
+          <content>
+         <fx:include fx:id="tabCalendario" source="tabCalendario.fxml" />   
+          </content>
+           </Tab>
+    </tabs>
+       </TabPane>
+
+
+It works, but I have a problem with the model, I think.
+
+Below the file Main.java
+
+public class Main extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("Manage your student");
+        Model model = new Model();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("gui/screentab.fxml"));
+            BorderPane root = (BorderPane)loader.load();
+            SoftwareController controller = loader.getController();
+            controller.setModel(model);
+            Scene scene = new Scene(root,1000,600);
+            scene.getStylesheets().add(getClass().getResource("gui/stylesheet1.css").toExternalForm());
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+
+
+This is the main controller (SoftwareController.java) with the method setModel();
+
+public class SoftwareController {
+
+    private Model model;
+
+    @FXML private TabPane tabPane;
+
+    @FXML private tabCalendarioController tabCalendarioController;
+    @FXML private tabPercorsiFormativiController tabPercorsiFormativiController;
+    @FXML private tabStudentiController tabStudentiController;
+
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
+
+    @FXML
+    void initialize() {
+        assert tabPane != null : "fx:id=\"tabPane\" was not injected: check your FXML file 'screentab.fxml'.";
+        tabStudentiController.init(this);
+        tabCalendarioController.init(this);
+        tabPercorsiFormativiController.init(this);
+    }
+
+}
+
+
+The model call the DAO and contains all the methods, called from the multiple controllers.
+
+public class Model {
+
+    StudentiDAO dao = new StudentiDAO();
+    List<Studente> elencoStudenti = new ArrayList<Studente>();
+
+    public List<Studente> elencaStudenti(){
+        elencoStudenti= dao.listaStudenti();
+        return elencoStudenti;
+
+    }
+}
+
+
+And this is one of the controllers, that call the method of the model.
+
+public class tabStudentiController {
+    private SoftwareController main;
+    private Model model;
+
+    @FXML
+    private Button btnElencoStudenti;
+
+    @FXML
+    public void doVisualizzaStudenti(ActionEvent event) {
+
+        model.elencaStudenti();
+
+        txtStudenti.appendText("Elenco studenti: \n");
+        for(Studente s: lista ){
+
+            txtStudenti.appendText(s.getStud_NOME()+ " "+ s.getStud_COGNOME()+ "\n");
+        } 
+
+    }
+
+ public void setModel(Model model) {
+            this.model = model ;
+        }
+
+    public void init(SoftwareController softwareController) {
+    main = softwareController;
+
+}
+
+
+    @FXML
+    void initialize() {
+        assert tabPane != null : "fx:id=\"tabPane\" was not injected: check your FXML file 'screentab.fxml'.";
+        assert tabStudenti != null : "fx:id=\"tabStudenti\" was not injected: check your FXML file 'screentab.fxml'.";
+    }
+
+}
+
+
+The problem:
+when I press the button that does start the event doVisualizzaStudenti i have this error:
+
+Exception in thread "JavaFX Application Thread" java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+at javafx.fxml.FXMLLoader$MethodHandler.invoke(Unknown Source)
+at javafx.fxml.FXMLLoader$ControllerMethodEventHandler.handle(Unknown Source)
+at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(Unknown Source)
+at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(Unknown Source)
+at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(Unknown Source)
+at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(Unknown Source)
+at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.EventUtil.fireEventImpl(Unknown Source)
+at com.sun.javafx.event.EventUtil.fireEvent(Unknown Source)
+at javafx.event.Event.fireEvent(Unknown Source)
+at javafx.scene.Node.fireEvent(Unknown Source)
+at javafx.scene.control.Button.fire(Unknown Source)
+at com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(Unknown Source)
+at com.sun.javafx.scene.control.skin.BehaviorSkinBase$1.handle(Unknown Source)
+at com.sun.javafx.scene.control.skin.BehaviorSkinBase$1.handle(Unknown Source)
+at com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(Unknown Source)
+at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(Unknown Source)
+at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(Unknown Source)
+at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(Unknown Source)
+at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(Unknown Source)
+at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(Unknown Source)
+
+
+at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(Unknown Source)
+    at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(Unknown Source)
+    at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(Unknown Source)
+    at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(Unknown Source)
+    at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(Unknown Source)
+    at com.sun.javafx.event.EventUtil.fireEventImpl(Unknown Source)
+    at com.sun.javafx.event.EventUtil.fireEvent(Unknown Source)
+    at javafx.event.Event.fireEvent(Unknown Source)
+    at javafx.scene.Scene$MouseHandler.process(Unknown Source)
+    at javafx.scene.Scene$MouseHandler.access$1500(Unknown Source)
+    at javafx.scene.Scene.impl_processMouseEvent(Unknown Source)
+    at javafx.scene.Scene$ScenePeerListener.mouseEvent(Unknown Source)
+    at com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.run(Unknown Source)
+    at com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.run(Unknown Source)
+    at java.security.AccessController.doPrivileged(Native Method)
+    at com.sun.javafx.tk.quantum.GlassViewEventHandler.lambda$handleMouseEvent$354(Unknown Source)
+    at com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(Unknown Source)
+    at com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(Unknown Source)
+    at com.sun.glass.ui.View.handleMouseEvent(Unknown Source)
+    at com.sun.glass.ui.View.notifyMouse(Unknown Source)
+    at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+    at com.sun.glass.ui.win.WinApplication.lambda$null$148(Unknown Source)
+    at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+    at java.lang.reflect.Method.invoke(Unknown Source)
+    at sun.reflect.misc.Trampoline.invoke(Unknown Source)
+    at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+    at java.lang.reflect.Method.invoke(Unknown Source)
+    at sun.reflect.misc.MethodUtil.invoke(Unknown Source)
+    ... 57 more
+Caused by: java.lang.NullPointerException
+    at software.tabStudentiController.doVisualizzaStudenti(tabStudentiController.java:36)
+    ... 66 more
+
+
+where tabStudentiController.java:36 is the line with  model.elencaStudenti().
+
+Where I'm doing wrong?
+Please, help me and sorry for my bad english!
+----==_mimepart_56ded611c1ccb_118541a29ae908b3
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>I'm going crazy with the making of an application in Java/JavaFX.</p>
+
+<p>I have a project with more fxml files, each with a controller
+(exactly like this example <a href="http://stackoverflow.com/questions/19889882/javafx-tabpane-one-controller-for-each-tab">JavaFX TabPane - One controller for each tab</a> )</p>
+
+<p>This is the main fxml file (<code>screentab.fxml</code>), with multiple <code>fx:include</code>.</p>
+
+<pre><code>&lt;TabPane fx:id="tabPane" BorderPane.alignment="CENTER"&gt;
+    &lt;tabs&gt;
+     &lt;Tab text="Studenti"&gt;
+           &lt;content&gt;
+           &lt;fx:include fx:id="Studenti" source="tabStudenti.fxml" /&gt;
+            &lt;/content&gt;
+           &lt;/Tab&gt;
+      &lt;Tab text="Percorsi &amp;#10;formativi"&gt;
+      &lt;content&gt;
+      &lt;fx:include fx:id="tabPercorsiFormativi" source="tabPercorsiFormativi.fxml" /&gt;
+      &lt;/content&gt;
+           &lt;/Tab&gt;
+        &lt;Tab text="Calendario &amp;#10;delle&amp;#10;lezioni"&gt;
+          &lt;content&gt;
+         &lt;fx:include fx:id="tabCalendario" source="tabCalendario.fxml" /&gt;   
+          &lt;/content&gt;
+           &lt;/Tab&gt;
+    &lt;/tabs&gt;
+       &lt;/TabPane&gt;
+</code></pre>
+
+<p>It works, but I have a problem with the model, I think.</p>
+
+<p>Below the file <code>Main.java</code></p>
+
+<pre><code>public class Main extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("Manage your student");
+        Model model = new Model();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("gui/screentab.fxml"));
+            BorderPane root = (BorderPane)loader.load();
+            SoftwareController controller = loader.getController();
+            controller.setModel(model);
+            Scene scene = new Scene(root,1000,600);
+            scene.getStylesheets().add(getClass().getResource("gui/stylesheet1.css").toExternalForm());
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+</code></pre>
+
+<p>This is the main controller (<code>SoftwareController.java</code>) with the method <code>setModel()</code>;</p>
+
+<pre><code>public class SoftwareController {
+
+    private Model model;
+
+    @FXML private TabPane tabPane;
+
+    @FXML private tabCalendarioController tabCalendarioController;
+    @FXML private tabPercorsiFormativiController tabPercorsiFormativiController;
+    @FXML private tabStudentiController tabStudentiController;
+
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
+
+    @FXML
+    void initialize() {
+        assert tabPane != null : "fx:id=\"tabPane\" was not injected: check your FXML file 'screentab.fxml'.";
+        tabStudentiController.init(this);
+        tabCalendarioController.init(this);
+        tabPercorsiFormativiController.init(this);
+    }
+
+}
+</code></pre>
+
+<p>The <code>model</code> call the <code>DAO</code> and contains all the methods, called from the multiple controllers.</p>
+
+<pre><code>public class Model {
+
+    StudentiDAO dao = new StudentiDAO();
+    List&lt;Studente&gt; elencoStudenti = new ArrayList&lt;Studente&gt;();
+
+    public List&lt;Studente&gt; elencaStudenti(){
+        elencoStudenti= dao.listaStudenti();
+        return elencoStudenti;
+
+    }
+}
+</code></pre>
+
+<p>And this is one of the controllers, that call the method of the model.</p>
+
+<pre><code>public class tabStudentiController {
+    private SoftwareController main;
+    private Model model;
+
+    @FXML
+    private Button btnElencoStudenti;
+
+    @FXML
+    public void doVisualizzaStudenti(ActionEvent event) {
+
+        model.elencaStudenti();
+
+        txtStudenti.appendText("Elenco studenti: \n");
+        for(Studente s: lista ){
+
+            txtStudenti.appendText(s.getStud_NOME()+ " "+ s.getStud_COGNOME()+ "\n");
+        } 
+
+    }
+
+ public void setModel(Model model) {
+            this.model = model ;
+        }
+
+    public void init(SoftwareController softwareController) {
+    main = softwareController;
+
+}
+
+
+    @FXML
+    void initialize() {
+        assert tabPane != null : "fx:id=\"tabPane\" was not injected: check your FXML file 'screentab.fxml'.";
+        assert tabStudenti != null : "fx:id=\"tabStudenti\" was not injected: check your FXML file 'screentab.fxml'.";
+    }
+
+}
+</code></pre>
+
+<p>The problem:
+when I press the button that does start the event <code>doVisualizzaStudenti</code> i have this error:</p>
+
+<pre><code>Exception in thread "JavaFX Application Thread" java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+at javafx.fxml.FXMLLoader$MethodHandler.invoke(Unknown Source)
+at javafx.fxml.FXMLLoader$ControllerMethodEventHandler.handle(Unknown Source)
+at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(Unknown Source)
+at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(Unknown Source)
+at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(Unknown Source)
+at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(Unknown Source)
+at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.EventUtil.fireEventImpl(Unknown Source)
+at com.sun.javafx.event.EventUtil.fireEvent(Unknown Source)
+at javafx.event.Event.fireEvent(Unknown Source)
+at javafx.scene.Node.fireEvent(Unknown Source)
+at javafx.scene.control.Button.fire(Unknown Source)
+at com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(Unknown Source)
+at com.sun.javafx.scene.control.skin.BehaviorSkinBase$1.handle(Unknown Source)
+at com.sun.javafx.scene.control.skin.BehaviorSkinBase$1.handle(Unknown Source)
+at com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(Unknown Source)
+at com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(Unknown Source)
+at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(Unknown Source)
+at com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(Unknown Source)
+at com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(Unknown Source)
+at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(Unknown Source)
+at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(Unknown Source)
+
+
+at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(Unknown Source)
+    at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(Unknown Source)
+    at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(Unknown Source)
+    at com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(Unknown Source)
+    at com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(Unknown Source)
+    at com.sun.javafx.event.EventUtil.fireEventImpl(Unknown Source)
+    at com.sun.javafx.event.EventUtil.fireEvent(Unknown Source)
+    at javafx.event.Event.fireEvent(Unknown Source)
+    at javafx.scene.Scene$MouseHandler.process(Unknown Source)
+    at javafx.scene.Scene$MouseHandler.access$1500(Unknown Source)
+    at javafx.scene.Scene.impl_processMouseEvent(Unknown Source)
+    at javafx.scene.Scene$ScenePeerListener.mouseEvent(Unknown Source)
+    at com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.run(Unknown Source)
+    at com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.run(Unknown Source)
+    at java.security.AccessController.doPrivileged(Native Method)
+    at com.sun.javafx.tk.quantum.GlassViewEventHandler.lambda$handleMouseEvent$354(Unknown Source)
+    at com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(Unknown Source)
+    at com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(Unknown Source)
+    at com.sun.glass.ui.View.handleMouseEvent(Unknown Source)
+    at com.sun.glass.ui.View.notifyMouse(Unknown Source)
+    at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+    at com.sun.glass.ui.win.WinApplication.lambda$null$148(Unknown Source)
+    at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+    at java.lang.reflect.Method.invoke(Unknown Source)
+    at sun.reflect.misc.Trampoline.invoke(Unknown Source)
+    at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+    at java.lang.reflect.Method.invoke(Unknown Source)
+    at sun.reflect.misc.MethodUtil.invoke(Unknown Source)
+    ... 57 more
+Caused by: java.lang.NullPointerException
+    at software.tabStudentiController.doVisualizzaStudenti(tabStudentiController.java:36)
+    ... 66 more
+</code></pre>
+
+<p>where <code>tabStudentiController.java:36</code> is the line with  <code>model.elencaStudenti()</code>.</p>
+
+<p>Where I'm doing wrong?
+Please, help me and sorry for my bad english!</p>
+----==_mimepart_56ded611c1ccb_118541a29ae908b3--

@@ -1,0 +1,67 @@
+Date: Tue, 08 Mar 2016 13:14:50 +0000
+From: Palma Fahey <florencio@carroll.org>
+To: virginie_hahn@dicki.net
+Message-ID: <1b73f320-c761-0133-ed4e-080027d0fd9d@carroll.org>
+Subject: Change file name to date of modification
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_56ded611d2f92_118541a29ae91886";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_56ded611d2f92_118541a29ae91886
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+I have the following issue, I wrote a piece of code which rename file names in a directory and its sub-directories. Now instead of changing it to the current date I want it to change to the file modification date.
+
+How can I do that?
+
+import os, path
+from datetime import datetime
+import time
+
+def walk_dir(path):
+    current_day = datetime.now().strftime("%Y-%m-%d")
+    for root, dirs, files in os.walk(path):    
+        for filename in files:
+            current = root + "/" + filename
+            if os.path.isfile(current):
+                print "ORIGINAL NAME: " + current
+                ext = os.path.splitext(filename)[1]
+                target_name = os.path.join(root, '{}{}'.format(current_day, ext))
+                print "NEW NAME: " + target_name
+                os.rename(current, target_name)
+
+walk_dir("/Users/shirin/Desktop/Artez")
+
+----==_mimepart_56ded611d2f92_118541a29ae91886
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>I have the following issue, I wrote a piece of code which rename file names in a directory and its sub-directories. Now instead of changing it to the current date I want it to change to the <code>file modification date</code>.</p>
+
+<p>How can I do that?</p>
+
+<pre><code>import os, path
+from datetime import datetime
+import time
+
+def walk_dir(path):
+    current_day = datetime.now().strftime("%Y-%m-%d")
+    for root, dirs, files in os.walk(path):    
+        for filename in files:
+            current = root + "/" + filename
+            if os.path.isfile(current):
+                print "ORIGINAL NAME: " + current
+                ext = os.path.splitext(filename)[1]
+                target_name = os.path.join(root, '{}{}'.format(current_day, ext))
+                print "NEW NAME: " + target_name
+                os.rename(current, target_name)
+
+walk_dir("/Users/shirin/Desktop/Artez")
+</code></pre>
+----==_mimepart_56ded611d2f92_118541a29ae91886--

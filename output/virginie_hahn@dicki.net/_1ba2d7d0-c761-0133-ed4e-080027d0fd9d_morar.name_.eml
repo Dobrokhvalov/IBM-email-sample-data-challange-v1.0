@@ -1,0 +1,86 @@
+Date: Tue, 08 Mar 2016 13:41:59 +0000
+From: "Ms. Alysha Okuneva" <alvis_cain@morar.name>
+To: virginie_hahn@dicki.net
+Message-ID: <1ba2d7d0-c761-0133-ed4e-080027d0fd9d@morar.name>
+Subject: Remove Parent node but leave child in multiple XML files in folder
+ using C#
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_56ded6122a387_118541a29ae956e6";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_56ded6122a387_118541a29ae956e6
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+I'm am trying to remove the parent node Parent but leave the child Child from multiple XML files in a folder. 
+The XML Structure in all files is like this:
+
+<Parent att="opt123">
+   <Child att="cop123">
+        .
+        .
+        .
+   </Child>
+</Parent>
+
+
+The code I'm using is to read the files in folder is:
+
+ XmlDocument xDoc = new XmlDocument();
+ string path = @"E:\new";
+        foreach (string file in Directory.EnumerateFiles(path, "*.xml"))
+        {
+            xDoc.Load(Path.Combine(Directory.GetCurrentDirectory(), file));
+}
+
+
+I need to remove node Parent and keep:
+
+<Child att="cop123">
+      .
+      .
+</Child>
+
+
+How can I do that?
+----==_mimepart_56ded6122a387_118541a29ae956e6
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>I'm am trying to remove the parent node <code>Parent</code> but leave the child <code>Child</code> from multiple XML files in a folder. 
+The XML Structure in all files is like this:</p>
+
+<pre><code>&lt;Parent att="opt123"&gt;
+   &lt;Child att="cop123"&gt;
+        .
+        .
+        .
+   &lt;/Child&gt;
+&lt;/Parent&gt;
+</code></pre>
+
+<p>The code I'm using is to read the files in folder is:</p>
+
+<pre><code> XmlDocument xDoc = new XmlDocument();
+ string path = @"E:\new";
+        foreach (string file in Directory.EnumerateFiles(path, "*.xml"))
+        {
+            xDoc.Load(Path.Combine(Directory.GetCurrentDirectory(), file));
+}
+</code></pre>
+
+<p>I need to remove node <code>Parent</code> and keep:</p>
+
+<pre><code>&lt;Child att="cop123"&gt;
+      .
+      .
+&lt;/Child&gt;
+</code></pre>
+
+<p>How can I do that?</p>
+----==_mimepart_56ded6122a387_118541a29ae956e6--

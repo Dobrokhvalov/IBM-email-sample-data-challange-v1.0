@@ -1,0 +1,65 @@
+Date: Tue, 08 Mar 2016 13:37:19 +0000
+From: Noe Beatty IV <raymond@grant.name>
+To: virginie_hahn@dicki.net
+Message-ID: <1b848370-c761-0133-ed4e-080027d0fd9d@grant.name>
+Subject: Javascript file does not load dynamically
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_56ded611eda94_118541a29ae93495";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_56ded611eda94_118541a29ae93495
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+I am using this answer, the ever popular SO post to dynamically load a javascript file:
+
+$.getScript("scripts/datagrid.js", function(){
+
+    alert("Script loaded but not necessarily executed.");                      
+
+});
+
+
+But the it never loads.  JQuery is referenced in the underlying HTML file in the header before the js file that is calling this script loading function.  Furthermore, I don't call this script loader until after the document is loaded:
+
+$(document).ready(function() {
+    administration.init();
+});
+
+
+I have validated that JQuery is loaded already by checking the value of an element that is hard-coded in HTML.  Which is also validated by the fact the script is executed.
+
+The script file exists and works if I add it to the HTML header, but I want to load it dynamically.
+
+Why does the anonymous function never fire (obviously because the script never loads - why)?
+----==_mimepart_56ded611eda94_118541a29ae93495
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<p>I am using this answer, the <a href="http://stackoverflow.com/questions/950087/include-a-javascript-file-in-another-javascript-file">ever popular SO post</a> to dynamically load a javascript file:</p>
+
+<pre><code>$.getScript("scripts/datagrid.js", function(){
+
+    alert("Script loaded but not necessarily executed.");                      
+
+});
+</code></pre>
+
+<p>But the it never loads.  JQuery is referenced in the underlying HTML file in the header <strong>before</strong> the js file that is calling this script loading function.  Furthermore, I don't call this script loader until after the document is loaded:</p>
+
+<pre><code>$(document).ready(function() {
+    administration.init();
+});
+</code></pre>
+
+<p>I have validated that JQuery is loaded already by checking the value of an element that is hard-coded in HTML.  Which is also validated by the fact the script is executed.</p>
+
+<p>The script file exists and works if I add it to the HTML header, but I want to load it dynamically.</p>
+
+<p>Why does the anonymous function never fire (obviously because the script never loads - why)?</p>
+----==_mimepart_56ded611eda94_118541a29ae93495--
