@@ -36,3 +36,7 @@ To run the script, from the project directory run in terminal:
 
     # ruby main.rb
 
+If everything is OK, terminal will output "FINISH" and 
+folders with .eml wil be generated at the path accorging to config.json file
+
+
