@@ -14,8 +14,11 @@ To install Bundler in Mac OS X / Linux, run:
 
 Installation
 ------------
+
 1) Unzip package
+
 2) Go to the unzipped directory in terminal
+
 3) Install gems
 
 To install all used gems, run:
