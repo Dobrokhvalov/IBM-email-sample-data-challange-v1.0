@@ -1,6 +1,6 @@
 {
 "numberOfInboxes":2,
-"megsPerInbox":10,
+"megsPerInbox":50,
 "rss":[
 "http://apps.topcoder.com/forums/?module=RSS&threadID=874783",
 "http://stackoverflow.com/feeds/question/35741275",

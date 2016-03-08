@@ -2,6 +2,7 @@ require 'nokogiri'
 require 'mail'
 require 'uuid'
 require 'modules/helper'
+require 'fileutils'
 
 module Message
   class Message
@@ -62,7 +63,10 @@ module Message
           n = (1..20).to_a.sample
 
 
-          dummy_filename = "./file-#{n}M.txt"
+          dummy_path = "./tmp"
+          FileUtils::mkdir_p(dummy_path)
+
+          dummy_filename = "#{dummy_path}/file-#{n}M.txt"
           f = File.open(dummy_filename, "w") do |f|
             contents = "x" * (1024*1024)
             n.to_i.times { f.write(contents) }
@@ -104,7 +108,7 @@ module Message
 
       # erasing dummy file
       if attached_file_flag
-        File.delete(dummy_filename)
+       File.delete(dummy_filename)
       end
 
     end

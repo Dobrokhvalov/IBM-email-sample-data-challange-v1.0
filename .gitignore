@@ -39,3 +39,4 @@ build/
 modules/#*
 modules/.#*
 output/
+tmp/*
