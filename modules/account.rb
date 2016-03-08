@@ -39,16 +39,17 @@ module Account
     #   current_folder_size + (megs * 1024 * 1024) >= @bytes_needed
     # end
 
-    # def bytes_needed
-    #    @bytes_needed - current_folder_size
-    # end
+    def more_bytes_needed
+       @bytes_needed - current_folder_size
+    end
 
-
-    private
 
     def current_folder_size
       directory_size(@inbox_path)
     end
+
+    private
+
 
     def initialize
       @inbox_path = nil

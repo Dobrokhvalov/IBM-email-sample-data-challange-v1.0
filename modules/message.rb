@@ -72,9 +72,16 @@ module Message
         if attached_file_flag
 
 
-          # randomly choose megs from 1 to 20 (by default)
-          n = (1..$config.maximum_attachment_size).to_a.sample
 
+          if account.more_bytes_needed < ($config.maximum_attachment_size * 1024 * 1024)
+
+            contents = "x" * account.more_bytes_needed
+            n = 1
+          else
+            # randomly choose megs from 1 to 20 (by default)
+            contents = "x" * (1024*1024)
+            n = (1..$config.maximum_attachment_size).to_a.sample
+          end
 
           dummy_path = "./tmp"
           FileUtils::mkdir_p(dummy_path)
@@ -82,7 +89,7 @@ module Message
           dummy_filename = "#{dummy_path}/file-#{n}M.txt"
 
           f = File.open(dummy_filename, "w") do |f|
-            contents = "x" * (1024*1024)
+
             n.to_i.times { f.write(contents) }
           end
 
