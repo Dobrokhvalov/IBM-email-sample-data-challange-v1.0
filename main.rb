@@ -26,6 +26,8 @@ def main
   config = ConfigParser::Parser.new(config_filename, config_path)
 
 
+  sources_list = []
+
   # generating email data for needed amount of accounts
   config.number_of_inboxes.times.each do |i|
 
@@ -34,7 +36,23 @@ def main
     puts "generating .eml files for user ##{i}: #{account}"
     account.create_inbox_folder config.file_destination
 
-    config.rss_feeds.each do |link|
+    account.set_folder_size config.megs_per_inbox
+
+
+    while true do
+
+      # stopping only when acount is full
+      if account.folder_full?
+        break
+      end
+
+      # repeating RSS Feeds if needed
+      if sources_list.empty?
+        sources_list = config.rss_feeds.shuffle.clone
+      end
+
+      link = sources_list.pop
+
       rss_getter = RSSHandle::Getter.new link
 
       feeds = rss_getter.get_feeds
@@ -48,9 +66,12 @@ def main
       thread.build
 
       thread.write_emls
+
     end
 
   end
+
+
 
 
 

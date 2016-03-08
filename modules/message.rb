@@ -2,6 +2,15 @@ require 'nokogiri'
 require 'mail'
 require 'uuid'
 
+def sanitize_filename(filename)
+
+  ans = filename.gsub(/^.*(\\|\/)/, '')
+
+  # Strip out the non-ascii character
+  ans = ans.gsub(/[^0-9A-Za-z.\-]/, '_')
+
+  return ans
+end
 
 module Message
   class Message
@@ -16,6 +25,23 @@ module Message
       @message_id ||= "<#{ UUID.generate }@#{@account_from.domain}>"
     end
 
+    def set_as_incoming_from account, recipients
+      @incoming = true
+      @account_from = account
+
+      @recipients = recipients
+
+    end
+
+    def set_as_outgoing_to recipients
+      @incoming = false
+      @account_from = @account_to
+      @recipients = recipients
+
+    end
+
+
+
     def write_eml
 
       title = @subject
@@ -23,23 +49,32 @@ module Message
       send_at = @created_at
       attached_file_flag = false
       dummy_filename = nil
-      account_to = @account_to
+      recipients = @recipients.map{|r| r.email }
       account_from = @account_from
-
+      account = @account
       custom_message_id = generate_message_id
 
       mail = Mail.new do
         date send_at
-        to      account_to
+        to      recipients
         from    account_from
         subject title
         message_id custom_message_id
 
         # creating dummy file to attach
-        if @@count == 1
+
+        # 50% chance to for adding file if we need space to full
+        if not account.folder_full? and [true, false].sample
           attached_file_flag = true
 
-          n = 1
+          # randomly choose megs from 1 to 20
+          n = (1..20).to_a.sample
+
+
+          # if account.folder_full_with?(n)
+          #   n =
+          # end
+
           dummy_filename = "./file-#{n}M.txt"
           f = File.open(dummy_filename, "w") do |f|
             contents = "x" * (1024*1024)
@@ -52,8 +87,6 @@ module Message
 
 
       end
-
-
 
 
       message_txt = @text_part
@@ -76,8 +109,11 @@ module Message
 
 
 
+      eml_content = compose_eml mail
 
-      File.open("./#{@account_to.inbox_path}/#{@count}.eml", 'w') { |file| file.write(mail.to_s) }
+      filename = sanitize_filename(@message_id)
+
+      File.open("./#{@account_to.inbox_path}/#{filename}.eml", 'w') { |file| file.write(eml_content) }
 
       # erasing dummy file
       if attached_file_flag
@@ -86,12 +122,42 @@ module Message
 
     end
 
+    def compose_eml mail
+      content = mail.to_s
+
+      if not @references.empty?
+
+        refs_part = "References: #{@references}"
+        content = refs_part + content
+      end
 
 
+      if not @reply_msg_id.nil?
+        reply_to_part = "In-Reply-To: #{@reply_msg_id}\n"
+        content = reply_to_part + content
+      end
+
+
+      return content
+
+
+    end
+
+    def incoming?
+      @incoming
+    end
+
+    def set_reply_msg_id msg_id
+      @reply_msg_id = msg_id
+    end
+
+    def add_reference msg_id
+      @references += "#{msg_id}\n"
+    end
 
     private
 
-    def initialize subject, created_at, text, account_to
+    def initialize subject, created_at, text, account
       @@count += 1
 
       @count = @@count
@@ -99,15 +165,21 @@ module Message
       @created_at = created_at
       @text = text
 
+      @account = account
+
       @account_from = Account::Account.new
-      @account_to = account_to
+      @account_to = account
+
+      @recipients = [account_to ]
 
       @html_part = CGI.unescapeHTML(text)
       @text_part = Nokogiri::HTML(@html_part).content
 
+      @incoming = true
 
+      @reply_msg_id = nil
 
-
+      @references = ""
     end
 
   end

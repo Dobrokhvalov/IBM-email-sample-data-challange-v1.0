@@ -10,7 +10,7 @@ module ConfigParser
      end
 
      def megs_per_inbox
-       @dct["megsPerInbox"].to_i
+       (@dct["megsPerInbox"] || 500).to_i
      end
 
      def number_of_inboxes
