@@ -217,6 +217,7 @@ module Conversation
     def generate_partners
       # randomly choose number of thread members
       #
+
       pool = (2..$config.max_amount_of_thread_members).to_a + [1] * $config.max_amount_of_thread_members
       n = pool.sample
 
