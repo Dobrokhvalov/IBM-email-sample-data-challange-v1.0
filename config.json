@@ -1,11 +1,11 @@
 {
 "numberOfInboxes":2,
-"megsPerInbox":1,
+"megsPerInbox":100,
 "rss":[
 "http://apps.topcoder.com/forums/?module=RSS&threadID=874783",
 "http://stackoverflow.com/feeds/question/35741275",
-"http://stackoverflow.com/feeds", 
-"asdf"
+"http://stackoverflow.com/feeds"
 ],
-"fileDestination":"./output"
+"maxAttachmentMegs": 10,
+"fileDestination":"./outputs"
 }

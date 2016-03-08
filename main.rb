@@ -5,15 +5,18 @@ require 'modules/rss_handle'
 require 'modules/account'
 require 'modules/conversation'
 
+# name of config file
+config_filename = "config.json"
+
+# path to config
+config_path = "./"
+
+# parsing config
+$config = ConfigParser::Parser.new(config_filename, config_path)
+
 
 
 def main
-
-  # name of config file
-  config_filename = "config.json"
-
-  # path to config
-  config_path = "./"
 
   puts ""
   puts "-" * 10
@@ -21,22 +24,17 @@ def main
   puts ""
 
 
-
-  # parsing config
-  config = ConfigParser::Parser.new(config_filename, config_path)
-
-
   sources_list = []
 
   # generating email data for needed amount of accounts
-  config.number_of_inboxes.times.each do |i|
+  $config.number_of_inboxes.times.each do |i|
 
     account  = Account::Account.new
 
     puts "generating .eml files for user ##{i}: #{account}"
-    account.create_inbox_folder config.file_destination
+    account.create_inbox_folder $config.file_destination
 
-    account.set_folder_size config.megs_per_inbox
+    account.set_folder_size $config.megs_per_inbox
 
 
     while true do
@@ -48,11 +46,11 @@ def main
 
       # repeating RSS Feeds if needed
       if sources_list.empty?
-        sources_list = config.rss_feeds.shuffle.clone
+        sources_list = $config.rss_feeds.shuffle.clone
 
-        # when no RSS feeds in config
+        # when no RSS feeds in $config
         if sources_list.empty?
-          abort("\nPut list of RSS in config.json file!")
+          abort("\nPut list of RSS in $config.json file!")
         end
       end
 
@@ -76,23 +74,12 @@ def main
         puts "ERROR! problem with RSS Feed: '#{link}'. Removing it from RSS list"
         puts e.message
         #puts e.backtrace.inspect
-        config.remove_rss link
+        $config.remove_rss link
       end
 
     end
 
   end
-
-
-
-
-
-
-
-
-
-
-
 
 
   puts ""
@@ -104,6 +91,7 @@ def main
 
 
 end
+
 
 
 

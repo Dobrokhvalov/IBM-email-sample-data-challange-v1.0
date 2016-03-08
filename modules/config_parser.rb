@@ -5,6 +5,10 @@ module ConfigParser
    class Parser
 
 
+     def maximum_attachment_size
+       (@dct["maxAttachmentMegs"] || 20).to_i
+     end
+
      def file_destination
        @dct["fileDestination"] || "./output"
      end

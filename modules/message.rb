@@ -59,8 +59,8 @@ module Message
         if not account.folder_full? and [true, false].sample
           attached_file_flag = true
 
-          # randomly choose megs from 1 to 20
-          n = (1..20).to_a.sample
+          # randomly choose megs from 1 to 20 (by default)
+          n = (1..$config.maximum_attachment_size).to_a.sample
 
 
           dummy_path = "./tmp"
