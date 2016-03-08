@@ -50,6 +50,17 @@ Besides configs listed in the challenge description ("numberOfInboxes", "megsPer
 These parametrs can be optionally added to config.json file.
 
 
+Program Logic
+-------------
+
+1) Configs loaded  from config.json
+2) Until desired number of "inboxes" processed:
+  2.1) new account is generated with fake email address and name
+  2.2) New RSS Feed is randomly chosen to make discussion thread (If all RSS Feeds used, same RSS Feeds are repeated again)
+  2.3)
+    a) If items of RSS Feed are not connected, every feed is considered as separate email from separate email account
+    b) If items of RSS feed are connected (e.g., forum thread), discussion thread is randomly constructed with random amount of participants (up to "maxThreadMemberNumber", default - 10). Every RSS item considered as separate reply email to previous RSS item and every participant has equal probability to be sender of email if he was in the receivers of previous email. 
+  2.4) For each incoming message .eml is written and randomly file attached with probability "mailsWithAttachmentPerc" (default - 50%) and random size ranging from 1 Mb to "maxAttachmentMegs" (default - 20 Mb)
 
 
 
