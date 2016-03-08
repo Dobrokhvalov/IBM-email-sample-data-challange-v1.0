@@ -7,8 +7,9 @@ Prerequisites
 - Ruby 2.0+
 - Bundler (http://bundler.io)
 
-  To install Bundler in Mac OS X/Linux, run 
-      # sudo gem install bundler
+To install Bundler in Mac OS X / Linux, run:
+ 
+    # sudo gem install bundler
 
 
 Installation
