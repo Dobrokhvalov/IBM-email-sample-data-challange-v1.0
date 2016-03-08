@@ -5,6 +5,10 @@ module ConfigParser
    class Parser
 
 
+     def mails_with_attachment_perc
+       (@dct["mailsWithAttachmentPerc"] || 50).to_i
+     end
+
      def maximum_attachment_size
        (@dct["maxAttachmentMegs"] || 20).to_i
      end

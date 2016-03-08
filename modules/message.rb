@@ -33,6 +33,17 @@ module Message
     end
 
 
+    def to_attach?
+      lst = [true, false]
+
+      if $config.mails_with_attachment_perc <= 100
+        trues = [true] * $config.mails_with_attachment_perc
+        falses = [false] * (100 - $config.mails_with_attachment_perc)
+        lst = trues + falses
+      end
+
+      return lst.sample
+    end
 
     def write_eml
 
@@ -46,6 +57,8 @@ module Message
       account = @account
       custom_message_id = generate_message_id
 
+      attached_file_flag = (not account.folder_full? and to_attach?)
+
       mail = Mail.new do
         date send_at
         to      recipients
@@ -56,8 +69,8 @@ module Message
         # creating dummy file to attach
 
         # 50% chance to for adding file if we need space to full
-        if not account.folder_full? and [true, false].sample
-          attached_file_flag = true
+        if attached_file_flag
+
 
           # randomly choose megs from 1 to 20 (by default)
           n = (1..$config.maximum_attachment_size).to_a.sample

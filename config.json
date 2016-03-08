@@ -7,5 +7,6 @@
 "http://stackoverflow.com/feeds"
 ],
 "maxAttachmentMegs": 10,
+"mailsWithAttachmentPerc": 33,
 "fileDestination":"./outputs"
 }
