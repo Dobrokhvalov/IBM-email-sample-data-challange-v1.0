@@ -2,14 +2,6 @@ require 'simple-rss'
 require 'open-uri'
 
 
-class Array
-  def odd_values
-    self.values_at(* self.each_index.select {|i| i.odd?})
-  end
-  def even_values
-    self.values_at(* self.each_index.select {|i| i.even?})
-  end
-end
 
 module RSSHandle
 
@@ -53,6 +45,9 @@ module RSSHandle
 
 
   class FeedHandler
+
+    # class for handling different RSS structure
+    # e.g "published" vs "pubDate"
 
     def subject
       @item.title

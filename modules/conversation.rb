@@ -78,7 +78,7 @@ module Conversation
     def change_subjects
       @messages.each_with_index do |m,i|
 
-        # changing subject only for
+        # changing subject for emails which are replys
         if m != starting_message
           m.subject = "Re: " + starting_message.subject
         end
@@ -89,7 +89,6 @@ module Conversation
 
 
     def outgoing_messages
-      #@messages.reject{|m| @incoming_messages.include? m }
       @messages.select{|m| not m.incoming? }
     end
 

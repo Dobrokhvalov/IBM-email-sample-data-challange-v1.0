@@ -4,6 +4,9 @@ module ConfigParser
 
    class Parser
 
+     # class responsible for parsing configs
+     # and loading them into memory
+
      def max_amount_of_thread_members
        (@dct["maxThreadMemberNumber"] || 10).to_i
      end

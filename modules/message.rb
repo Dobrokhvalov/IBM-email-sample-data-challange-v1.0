@@ -6,6 +6,8 @@ require 'fileutils'
 
 module Message
   class Message
+    # class responsible for emails
+    #
 
     attr_reader  :created_at, :message_id
     attr_accessor :html_part, :text_part, :subject, :account_from, :account_to
@@ -13,7 +15,6 @@ module Message
     @@count = 0
 
     def generate_message_id
-      #@message_id = SecureRandom.hex(32)
       @message_id ||= "<#{ UUID.generate }@#{@account_from.domain}>"
     end
 
@@ -34,6 +35,9 @@ module Message
 
 
     def to_attach?
+
+      # randomly choose to attach file or not to attach
+
       lst = [true, false]
 
       if $config.mails_with_attachment_perc <= 100
@@ -66,13 +70,12 @@ module Message
         subject title
         message_id custom_message_id
 
-        # creating dummy file to attach
 
-        # 50% chance to for adding file if we need space to full
+
         if attached_file_flag
 
 
-
+          # creating dummy file to attach
           if account.more_bytes_needed < ($config.maximum_attachment_size * 1024 * 1024)
 
             contents = "x" * account.more_bytes_needed

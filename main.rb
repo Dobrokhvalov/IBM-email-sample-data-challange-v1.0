@@ -12,6 +12,7 @@ config_filename = "config.json"
 config_path = "./"
 
 # parsing config
+# global variable to use in other modules
 $config = ConfigParser::Parser.new(config_filename, config_path)
 
 
@@ -31,7 +32,7 @@ def main
 
     account  = Account::Account.new
 
-    puts "generating .eml files for user ##{i}: #{account}"
+    puts "generating .eml files for user ##{i+1}: #{account}"
     account.create_inbox_folder $config.file_destination
 
     account.set_folder_size $config.megs_per_inbox
@@ -48,32 +49,38 @@ def main
       if sources_list.empty?
         sources_list = $config.rss_feeds.shuffle.clone
 
-        # when no RSS feeds in $config
+        # when no RSS feeds in config
         if sources_list.empty?
           abort("\nPut list of RSS in $config.json file!")
         end
       end
 
+      # next RSS Feed link
       link = sources_list.pop
 
-      begin
-        rss_getter = RSSHandle::Getter.new link
 
+      begin
+
+        # getting feeds from RSS link
+        rss_getter = RSSHandle::Getter.new link
         feeds = rss_getter.get_feeds
 
-        thread = Conversation::Thread.new account
 
+        # building discussion thread
+        thread = Conversation::Thread.new account
         feeds.each do |feed|
           thread.add feed.subject, feed.sent_at, feed.text
         end
-
         thread.build
 
+        # writing .eml files
         thread.write_emls
+
       rescue Exception => e
         puts "ERROR! problem with RSS Feed: '#{link}'. Removing it from RSS list"
         puts e.message
-        #puts e.backtrace.inspect
+
+        # removing broken link from sources
         $config.remove_rss link
       end
 
