@@ -7,3 +7,12 @@ Installation
 To install all used libraries, run:
 
     # bundle install
+
+If you don't have bundler installed, you can
+
+Usage
+-----
+
+To run the script, run:
+
+    # ruby main.rb
