@@ -85,7 +85,7 @@ module Conversation
       end
     end
 
-    
+
 
 
     def outgoing_messages
@@ -99,7 +99,7 @@ module Conversation
 
 
     def build_email_tree
-      
+
       change_subjects
 
       composer = Composer.new @messages, @account
@@ -107,18 +107,18 @@ module Conversation
       composer.compose
 
       composer.set_references_for_messages
-      
+
       add_email_history
-      
+
     end
-    
-    
+
+
     def set_message_ids
       @messages.map{|m| m.generate_message_id }
     end
-    
+
     def unrelated_feeds?
-      @messages.select{|m| m.subject.include? "Re:" or m.subject.include? "Answer by"}.empty? 
+      @messages.select{|m| m.subject.include? "Re:" or m.subject.include? "Answer by"}.empty?
     end
 
     def starting_message
@@ -135,12 +135,12 @@ module Conversation
 
     def initialize account
       @incoming_messages = []
-      
+
       @messages = []
-      
-      
+
+
       @account = account
-      
+
       @history_text = ""
       @history_html = ""
 
@@ -153,7 +153,7 @@ module Conversation
 
   class Composer
 
-    def choose_partner_without accounts 
+    def choose_partner_without accounts
       participants_without(accounts).sample
     end
 
@@ -165,19 +165,19 @@ module Conversation
       participants.reject{|p| accounts.include? p }
     end
 
-    
+
     def compose
       # starting from the last message
-      # (which is always incoming by default) 
+      # (which is always incoming by default)
       # assign to message
-      
+
       tmp_lst = @lst.clone
       prev_msg = tmp_lst.pop
-      
+
       prev_partner = choose_partner_without [@account]
       receivers = participants_without [prev_partner]
-      
-      
+
+
       prev_msg.set_as_incoming_from prev_partner, receivers
 
       while tmp_lst.any?
@@ -187,18 +187,18 @@ module Conversation
         receivers = participants_without [partner]
 
         if partner == @account
-          cur_msg.set_as_outgoing_to receivers          
+          cur_msg.set_as_outgoing_to receivers
         else
           cur_msg.set_as_incoming_from partner, receivers
         end
-        
+
         prev_msg.set_reply_msg_id cur_msg.generate_message_id
         prev_msg = cur_msg
         prev_partner = partner
-        
+
       end
     end
-    
+
 
     def set_references_for_messages
       ref_list = []
@@ -217,17 +217,17 @@ module Conversation
     def generate_partners
       # randomly choose number of thread members
       #
-      pool = (2..10).to_a + [1] * 8
+      pool = (2..$config.max_amount_of_thread_members).to_a + [1] * $config.max_amount_of_thread_members
       n = pool.sample
-      
+
       return n.times.map{|i| Account::Account.new }
     end
-    
+
     def initialize messages, account
       @lst = messages.sort_by{|m| m.created_at }
       @account = account
     end
-    
+
   end
-  
+
 end

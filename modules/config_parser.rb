@@ -4,6 +4,9 @@ module ConfigParser
 
    class Parser
 
+     def max_amount_of_thread_members
+       (@dct["maxThreadMemberNumber"] || 10).to_i
+     end
 
      def mails_with_attachment_perc
        (@dct["mailsWithAttachmentPerc"] || 50).to_i
