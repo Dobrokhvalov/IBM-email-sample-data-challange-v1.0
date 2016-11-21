@@ -16,9 +16,7 @@ config_path = "./"
 $config = ConfigParser::Parser.new(config_filename, config_path)
 
 
-
 def main
-
   puts ""
   puts "-" * 10
   puts "START"
