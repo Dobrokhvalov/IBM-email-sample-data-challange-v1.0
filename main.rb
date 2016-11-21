@@ -21,8 +21,6 @@ def main
   puts "-" * 10
   puts "START"
   puts ""
-
-
   sources_list = []
 
   # generating email data for needed amount of accounts
